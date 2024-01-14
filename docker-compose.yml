@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  discordopole:
+    container_name: Discordopole
+    build:
+      context: ./Discordopole
+    command: python3 discordopole.py
+    restart: ${RESTARTUNLESS}
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ./Discordopole/config:/usr/src/app/config
+      - ./Discordopole/config/config.ini:/usr/src/app/config.ini
+      - ./Discordopole/data/dts/en.json:/usr/src/app/data/dts/en.json
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
